@@ -12,16 +12,12 @@ namespace Tamagotchi
 
         [SerializeField]
         public float statValue = 0.0f;
+        
         public float CheckStatistic()
         {
             //statValue = statistic.GetStatValue();
 
-            if (statValue > Random.value)
-            {
-                return statValue;
-            }
-
-            return 0.0f;
+            return statValue > Random.value ? statValue : 0.0f;
         }
     }
 }

@@ -1,5 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine;
@@ -28,17 +28,14 @@ namespace Tamagotchi
         {
             if (requestText)
             {
-                InvokeRepeating("CheckAllStatistics", 2.0f, 1.0f);
+                InvokeRepeating(nameof(CheckAllStatistics), 2.0f, 1.0f);
             }
 
             if (actionDropdown)
             {
-                List<TMP_Dropdown.OptionData> optionDataList = new List<TMP_Dropdown.OptionData>();
-                
-                foreach (Need need in needs)
-                {
-                    optionDataList.Add(new TMP_Dropdown.OptionData(need.request.request));
-                }
+                List<TMP_Dropdown.OptionData> optionDataList = 
+                    needs.Select(need => new TMP_Dropdown.OptionData(need.request.request)).ToList();
+
                 actionDropdown.options = optionDataList;
             }
         }
@@ -51,13 +48,11 @@ namespace Tamagotchi
 
         private void CheckAllStatistics()
         {
-            float   tempStatValue = 0.0f;
-
             bestStatValue = needs[bestStatIndex].request.statValue;
 
             for(int i = 0; i < needs.Count; i++)
             {
-                tempStatValue =  needs[i].request.CheckStatistic();
+                float tempStatValue = needs[i].request.CheckStatistic();
 
                 if (tempStatValue > bestStatValue)
                 {
