@@ -28,13 +28,13 @@ namespace Tamagotchi
         {
             if (requestText)
             {
-                InvokeRepeating(nameof(CheckAllStatistics), 2.0f, 1.0f);
+                InvokeRepeating(nameof(CheckAllStatistics), 2.0f, 5.0f);
             }
 
             if (actionDropdown)
             {
                 List<TMP_Dropdown.OptionData> optionDataList = 
-                    needs.Select(need => new TMP_Dropdown.OptionData(need.request.request)).ToList();
+                    needs.Select(need => new TMP_Dropdown.OptionData(need.action)).ToList();
 
                 actionDropdown.options = optionDataList;
             }
@@ -44,6 +44,11 @@ namespace Tamagotchi
         void Update()
         {
 
+        }
+
+        public void StartAction()
+        {
+            needs[actionDropdown.value].request.statValue = 0.0f; //Do Action (change value according to the needed behavior);
         }
 
         private void CheckAllStatistics()
@@ -61,7 +66,11 @@ namespace Tamagotchi
                 }
             }
 
-            requestText.text = needs[bestStatIndex].request.request;
+            if (bestStatValue > needs[bestStatIndex].debugStep)
+                requestText.text = needs[bestStatIndex].request.request;
+
+            else
+                requestText.text = string.Empty;
         }
     }
 }

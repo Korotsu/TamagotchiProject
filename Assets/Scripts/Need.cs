@@ -11,10 +11,17 @@ namespace Tamagotchi
         [SerializeField]
         private string name = "";
 
+        [SerializeField]
+        public string action = "";
+
+        [SerializeField]
+        public float debugStep = 0.0f;
+
         //[SerializeField]
         //private Statistic statistic = new Statistic();
 
         [SerializeField]
         public Request request = new Request();
+
     }
 }
