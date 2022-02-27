@@ -9,10 +9,7 @@ namespace Tamagotchi
     public class Need
     {
         [SerializeField]
-        private string name = "";
-
-        [SerializeField]
-        public string action = "";
+        public string name = "";
 
         [SerializeField]
         public float debugStep = 0.0f;
