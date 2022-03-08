@@ -9,7 +9,10 @@ namespace Tamagotchi
     public class TamagotchiManager : MonoBehaviour
     {
         [SerializeField]
-        private List<Need> needs = new List<Need>();
+        public List<Need> needs = new List<Need>();
+
+        [SerializeField]
+        private ActionManager actionManager = null;
 
         [SerializeField]
         private TMP_Text requestText = null;
@@ -33,10 +36,10 @@ namespace Tamagotchi
 
             if (actionDropdown)
             {
-                List<TMP_Dropdown.OptionData> optionDataList = 
+                /*List<TMP_Dropdown.OptionData> optionDataList = 
                     needs.Select(need => new TMP_Dropdown.OptionData(need.action)).ToList();
 
-                actionDropdown.options = optionDataList;
+                actionDropdown.options = optionDataList;*/
             }
         }
 

@@ -208,6 +208,7 @@ GameObject:
   m_Component:
   - component: {fileID: 151983152}
   - component: {fileID: 151983153}
+  - component: {fileID: 151983154}
   m_Layer: 0
   m_Name: Tamagotchi
   m_TagString: Untagged
@@ -243,26 +244,46 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   needs:
   - name: Eat
-    action: Give Food
     debugStep: 0
     request:
       request: Im HUNGRY !
       statValue: 0.2
   - name: Sleep
-    action: Go to bed
     debugStep: 0
     request:
       request: I need to SLEEP !
       statValue: 0.25
   - name: Play
-    action: Play Ball
     debugStep: 0
     request:
       request: I wanna PLAY !
       statValue: 0.3
+  actionManager: {fileID: 151983154}
   requestText: {fileID: 1216697652}
   actionDropdown: {fileID: 1921557067}
   actionButton: {fileID: 1614044455}
+--- !u!114 &151983154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 151983151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e69242ca3f87114ab54f9fe63dd6dba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tamagotchiManager: {fileID: 151983153}
+  actions:
+  - action: 
+    INIndexList: 
+  - action: 
+    INIndexList: 
+  - action: 
+    INIndexList: 
+  - action: 
+    INIndexList: 
 --- !u!1 &204180253
 GameObject:
   m_ObjectHideFlags: 0
