@@ -72,6 +72,8 @@ namespace Tamagotchi
 
         //private int selected = 0;
 
+        private float offset = 5.0f;
+
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             EditorGUI.BeginProperty(position, label, property);
@@ -81,9 +83,10 @@ namespace Tamagotchi
 
             var actionRect = new Rect(position.x, position.y, position.width, EditorGUIUtility.singleLineHeight);
 
-            var INIndexListRect = new Rect(position.x, position.y + actionRect.height, position.width, EditorGUIUtility.singleLineHeight);
+            var INIndexListRect = new Rect(position.x, position.y + actionRect.height + offset, position.width, EditorGUIUtility.singleLineHeight);
 
             var action = property.FindPropertyRelative("action");
+            
             var INIndexList = property.FindPropertyRelative("INIndexList");
 
             EditorGUI.PropertyField(actionRect, action, new GUIContent(action.stringValue));
@@ -95,7 +98,6 @@ namespace Tamagotchi
             EditorGUI.indentLevel -= 1;
 
             //var actionManagerValue = property.serializedObject.targetObject as ActionManager;
-
             /*if (actionManagerValue)
             {
                 for (int i = 0; i < INIndexList.arraySize; i++)
@@ -117,16 +119,14 @@ namespace Tamagotchi
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
             float totalHeight = EditorGUI.GetPropertyHeight(property);
-            var action = property.serializedObject.FindProperty(fieldInfo.Name).GetArrayElementAtIndex(0);
+            property.NextVisible(true);
 
-            action.NextVisible(true);
-
-            while (action.NextVisible(false))
+            while (property.NextVisible(false) && property.depth >= 2)
             {
-                totalHeight += EditorGUI.GetPropertyHeight(action, true);
+                totalHeight += EditorGUI.GetPropertyHeight(property, true);
             }
 
-            return totalHeight;
+            return totalHeight + 2 * offset;
         }
     }
 }

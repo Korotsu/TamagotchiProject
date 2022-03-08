@@ -275,6 +275,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tamagotchiManager: {fileID: 151983153}
+  actions:
+  - action: 
+    INIndexList: 
+  - action: 
+    INIndexList: 
+  - action: 
+    INIndexList: 
+  - action: 
+    INIndexList: 
 --- !u!1 &204180253
 GameObject:
   m_ObjectHideFlags: 0

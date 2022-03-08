@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace Tamagotchi
 {
-    [System.Serializable, ExecuteInEditMode]
-    public class Action : MonoBehaviour
+    [System.Serializable]
+    public class Action
     {
         [SerializeField]
         public string action = "";
@@ -22,7 +22,7 @@ namespace Tamagotchi
     {
         public TamagotchiManager tamagotchiManager;
         
-        //public List<Action> actions = new List<Action>();
+        public List<Action> actions = new List<Action>();
 
     }
 }
