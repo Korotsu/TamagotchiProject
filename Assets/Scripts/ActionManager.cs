@@ -5,24 +5,26 @@ using UnityEngine;
 namespace Tamagotchi
 {
     [System.Serializable]
+    public class ImpactedNeed
+    {
+        public int selected;
+    }
+
+    [System.Serializable]
     public class Action
     {
         [SerializeField]
         public string action = "";
 
-        //[SerializeField]
-        private List<Need> impactedNeeds = new List<Need>();
-
         [SerializeField]
-        public List<int> INIndexList = new List<int>();
+        public List<ImpactedNeed> impactedNeeds = new List<ImpactedNeed>();
     }
 
     [System.Serializable]
     public class ActionManager : MonoBehaviour
     {
         public TamagotchiManager tamagotchiManager;
-        
-        public List<Action> actions = new List<Action>();
 
+        public List<Action> actions = new List<Action>();
     }
 }

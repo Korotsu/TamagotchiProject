@@ -36,10 +36,10 @@ namespace Tamagotchi
 
             if (actionDropdown)
             {
-                /*List<TMP_Dropdown.OptionData> optionDataList = 
-                    needs.Select(need => new TMP_Dropdown.OptionData(need.action)).ToList();
+                List<TMP_Dropdown.OptionData> optionDataList = 
+                    actionManager.actions.Select(action => new TMP_Dropdown.OptionData(action.action)).ToList();
 
-                actionDropdown.options = optionDataList;*/
+                actionDropdown.options = optionDataList;
             }
         }
 
@@ -51,7 +51,10 @@ namespace Tamagotchi
 
         public void StartAction()
         {
-            needs[actionDropdown.value].request.statValue = 0.0f; //Do Action (change value according to the needed behavior);
+            foreach (var influencedNeeds in actionManager.actions[actionDropdown.value].impactedNeeds)
+            {
+                needs[influencedNeeds.selected].request.statValue = 0.0f; //Do Action (change value according to the needed behavior);
+            }
         }
 
         private void CheckAllStatistics()

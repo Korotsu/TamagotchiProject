@@ -271,19 +271,30 @@ MonoBehaviour:
   m_GameObject: {fileID: 151983151}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e69242ca3f87114ab54f9fe63dd6dba, type: 3}
+  m_Script: {fileID: 11500000, guid: e9eb348f6ee93154db50f25dcf2b03a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   tamagotchiManager: {fileID: 151983153}
   actions:
-  - action: 
-    INIndexList: 
-  - action: 
-    INIndexList: 
-  - action: 
-    INIndexList: 
-  - action: 
-    INIndexList: 
+  - action: Hurt Somebody
+    impactedNeeds:
+    - selected: 0
+    - selected: 1
+    - selected: 2
+    - selected: 0
+    - selected: 2
+  - action: sdsd
+    impactedNeeds: []
+  - action: dede
+    impactedNeeds:
+    - selected: 1
+    - selected: 2
+  - action: fgegeg
+    impactedNeeds: []
+  - action: fvbsdbr
+    impactedNeeds:
+    - selected: 1
+    - selected: 0
 --- !u!1 &204180253
 GameObject:
   m_ObjectHideFlags: 0
