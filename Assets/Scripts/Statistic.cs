@@ -8,17 +8,18 @@ using UnityEngine;
 namespace Tamagotchi
 {
     [Serializable]
-    public class Statistic : MonoBehaviour
+    public class Statistic
     {
-        [SerializeField] private string         _statName;
+        [SerializeField] private string _statName;
 
-        [SerializeField, Min(0)] private float  maxValue;
-        [SerializeField] private float          currentValue;
+        [SerializeField, Min(0.001f)] private float maxValue;
+        [SerializeField, Min(0)] private float currentValue;
+        private float currentCoef = 1.0f;
 
         [SerializeField] private AnimationCurve feltScoreCurve;
-        
+
         public string statName => _statName;
-        public float FeltScore => feltScoreCurve.Evaluate(currentValue);
+        public float FeltScore => feltScoreCurve.Evaluate(currentValue / maxValue);
 
 
         [SerializeField] private List<Influencer> activeInfluencers;
@@ -26,12 +27,12 @@ namespace Tamagotchi
         [SerializeField] private List<Impacter> startingImpacters;
         private List<Impacter> activeImpacters;
 
-        
+
         public void AddInfluencer(Influencer newInfluencer)
         {
             if (activeInfluencers.All(influencer => influencer.inflName != newInfluencer.inflName))
                 activeInfluencers.Add(newInfluencer);
-            
+
         }
 
         public void AddImpacter(Impacter newImpacter)
@@ -53,8 +54,12 @@ namespace Tamagotchi
 
             startingImpacters.Clear();
         }
-        
-        
-        
+
+        public void UpdateValue()
+        {
+            currentValue += Time.deltaTime * currentCoef;
+            currentValue = Mathf.Clamp(currentValue, 0, maxValue);
+        }
+
     }
 }

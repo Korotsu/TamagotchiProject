@@ -14,11 +14,17 @@ namespace Tamagotchi
         [SerializeField]
         public float debugStep = 0.0f;
 
-        //[SerializeField]
-        //private Statistic statistic = new Statistic();
+        [SerializeField]
+        public string request = "";
 
         [SerializeField]
-        public Request request = new Request();
+        public Statistic statistic = new Statistic();
 
+        public float CheckStatistic()
+        {
+            var statValue = statistic.FeltScore;
+
+            return statValue > UnityEngine.Random.value ? statValue : 0.0f;
+        }
     }
 }

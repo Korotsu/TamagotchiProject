@@ -18,13 +18,20 @@ namespace Tamagotchi
             EditorGUI.indentLevel = 0;
 
             var actionManagerValue = property.serializedObject.targetObject as ActionManager;
+            var modifierManagerValue = property.serializedObject.targetObject as ModifiersManager;
 
-            var actionRect = new Rect(position.x, position.y, position.width, EditorGUIUtility.singleLineHeight);
+            var impactedNeedRect = new Rect(position.x, position.y, position.width, EditorGUIUtility.singleLineHeight);
             var selected = property.FindPropertyRelative("selected");
 
-            List<string> options = actionManagerValue.tamagotchiManager.needs.Select(need => need.name).ToList();
-            selected.intValue = EditorGUI.Popup(actionRect, selected.intValue, options.ToArray());
+            List<string> options = new List<string>();
 
+            if (actionManagerValue)
+                options = actionManagerValue.tamagotchiManager.needs.Select(need => need.name).ToList();
+
+            else if (modifierManagerValue)
+                options = modifierManagerValue.tamagotchiManager.needs.Select(need => need.name).ToList();
+
+            selected.intValue = EditorGUI.Popup(impactedNeedRect, selected.intValue, options.ToArray());
             EditorGUI.indentLevel = indent;
 
             EditorGUI.EndProperty();

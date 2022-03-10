@@ -23,8 +23,8 @@ namespace Tamagotchi
         [SerializeField]
         private Button actionButton = null;
 
-        private int     bestStatIndex = 0;
-        private float   bestStatValue = 0.0f;
+        private int bestStatIndex = 0;
+        private float bestStatValue = 0.0f;
 
         // Start is called before the first frame update
         void Start()
@@ -36,7 +36,7 @@ namespace Tamagotchi
 
             if (actionDropdown)
             {
-                List<TMP_Dropdown.OptionData> optionDataList = 
+                List<TMP_Dropdown.OptionData> optionDataList =
                     actionManager.actions.Select(action => new TMP_Dropdown.OptionData(action.action)).ToList();
 
                 actionDropdown.options = optionDataList;
@@ -46,24 +46,27 @@ namespace Tamagotchi
         // Update is called once per frame
         void Update()
         {
-
+            foreach (var need in needs)
+            {
+                need.statistic.UpdateValue();
+            }
         }
 
         public void StartAction()
         {
             foreach (var influencedNeeds in actionManager.actions[actionDropdown.value].impactedNeeds)
             {
-                needs[influencedNeeds.selected].request.statValue = 0.0f; //Do Action (change value according to the needed behavior);
+                needs[influencedNeeds.selected].statistic.AddImpacter(new Impacter()); //Do Action (change value according to the needed behavior);
             }
         }
 
         private void CheckAllStatistics()
         {
-            bestStatValue = needs[bestStatIndex].request.statValue;
+            bestStatValue = needs[bestStatIndex].statistic.FeltScore;
 
-            for(int i = 0; i < needs.Count; i++)
+            for (int i = 0; i < needs.Count; i++)
             {
-                float tempStatValue = needs[i].request.CheckStatistic();
+                float tempStatValue = needs[i].CheckStatistic();
 
                 if (tempStatValue > bestStatValue)
                 {
@@ -73,7 +76,7 @@ namespace Tamagotchi
             }
 
             if (bestStatValue > needs[bestStatIndex].debugStep)
-                requestText.text = needs[bestStatIndex].request.request;
+                requestText.text = needs[bestStatIndex].request;
 
             else
                 requestText.text = string.Empty;
