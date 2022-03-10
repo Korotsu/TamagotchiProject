@@ -17,7 +17,7 @@ namespace Tamagotchi
         public string action = "";
 
         [SerializeField]
-        public List<ImpactedNeed> impactedNeeds = new List<ImpactedNeed>();
+        public List<Impacter> impacters = new List<Impacter>();
     }
 
     [System.Serializable]

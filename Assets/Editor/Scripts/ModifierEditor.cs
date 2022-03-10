@@ -5,8 +5,8 @@ using UnityEditor;
 
 namespace Tamagotchi
 {
-    [CustomPropertyDrawer(typeof(Modifier))]
-    public class ModifierEditor : PropertyDrawer
+    [CustomPropertyDrawer(typeof(Impacter))]
+    public class ImpacterEditor : PropertyDrawer
     {
         private float offset = 5.0f;
 
@@ -17,31 +17,26 @@ namespace Tamagotchi
             var indent = EditorGUI.indentLevel;
             EditorGUI.indentLevel = 0;
 
-            var modifierNameRect = new Rect(position.x, position.y, position.width, EditorGUIUtility.singleLineHeight);
-            var modifierName = property.FindPropertyRelative("modifierName");
+            var impacterName = property.FindPropertyRelative("impacterName");
+            var impacterFoldout = property.FindPropertyRelative("impacterFoldout");
 
-            var modifierFoldout = property.FindPropertyRelative("modifierFoldout");
+            var impacterFoldoutRect = new Rect(position.x, position.y, position.width, EditorGUIUtility.singleLineHeight);
 
-            modifierFoldout.boolValue = EditorGUI.Foldout(modifierNameRect, modifierFoldout.boolValue, new GUIContent(modifierName.stringValue));
+            impacterFoldout.boolValue = EditorGUI.Foldout(impacterFoldoutRect, impacterFoldout.boolValue, new GUIContent(impacterName.stringValue));
 
-            var value = EditorGUI.GetPropertyHeight(modifierFoldout) + modifierNameRect.y + offset - position.y;
-            if (modifierFoldout.boolValue)
+            var value = EditorGUI.GetPropertyHeight(impacterFoldout) + impacterFoldoutRect.y + offset - position.y;
+            if (impacterFoldout.boolValue)
             {
                 EditorGUI.indentLevel++;
 
-                var influenceRect = new Rect(position.x, modifierNameRect.y + modifierNameRect.height + offset, position.width, EditorGUIUtility.singleLineHeight);
-                var influence = property.FindPropertyRelative("influence");
-                EditorGUI.PropertyField(influenceRect, influence);
+                var impacterNameRect = new Rect(position.x, impacterFoldoutRect.y + impacterFoldoutRect.height + offset, position.width, EditorGUIUtility.singleLineHeight);
+                EditorGUI.PropertyField(impacterNameRect, impacterName);
 
-                var impactRect = new Rect(position.x, influenceRect.y + influenceRect.height + offset, position.width, EditorGUIUtility.singleLineHeight);
-                var impact = property.FindPropertyRelative("impact");
+                var impactRect = new Rect(position.x, impacterNameRect.y + impacterNameRect.height + offset, position.width, EditorGUIUtility.singleLineHeight);
+                var impact = property.FindPropertyRelative("impactValue");
                 EditorGUI.PropertyField(impactRect, impact);
 
-                var chanceToTriggerRect = new Rect(position.x, impactRect.y + impactRect.height + offset, position.width, EditorGUIUtility.singleLineHeight);
-                var chanceToTrigger = property.FindPropertyRelative("chanceToTrigger");
-                EditorGUI.PropertyField(chanceToTriggerRect, chanceToTrigger);
-
-                var typeRect = new Rect(position.x, chanceToTriggerRect.y + chanceToTriggerRect.height + offset, position.width, EditorGUIUtility.singleLineHeight);
+                var typeRect = new Rect(position.x, impactRect.y + impactRect.height + offset, position.width, EditorGUIUtility.singleLineHeight);
                 var type = property.FindPropertyRelative("type");
                 EditorGUI.PropertyField(typeRect, type);
 
@@ -86,11 +81,7 @@ namespace Tamagotchi
                 var impactedNeeds = property.FindPropertyRelative("impactedNeeds");
                 EditorGUI.PropertyField(impactedNeedsRect, impactedNeeds);
 
-                var conditionsRect = new Rect(position.x, EditorGUI.GetPropertyHeight(impactedNeeds) + impactedNeedsRect.y + offset, position.width, EditorGUIUtility.singleLineHeight);
-                var conditions = property.FindPropertyRelative("conditions");
-                EditorGUI.PropertyField(conditionsRect, conditions);
-
-                value = EditorGUI.GetPropertyHeight(conditions) + conditionsRect.y + offset - position.y;
+                value = EditorGUI.GetPropertyHeight(impactedNeeds) + impactedNeedsRect.y + offset - position.y;
 
                 EditorGUI.indentLevel--;
             }

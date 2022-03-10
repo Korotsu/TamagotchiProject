@@ -8,44 +8,74 @@ namespace Tamagotchi
     [Serializable]
     public class Modifier
     {
-        [SerializeField]
-        public string modifierName = "";
-
-        [SerializeField]
-        public float editorGUISize = 0.0f;
-
-        [SerializeField]
-        public bool modifierFoldout = false;
-
-        [SerializeField]
-        private float influence = 0.0f;
-
-        [SerializeField]
-        private float impact = 0.0f;
+        [SerializeField] private string _modifierName;
+        public string modifierName => _modifierName;
 
         [SerializeField, Range(0, 1)]
-        private float chanceToTrigger = 0.0f;
+        public float chanceToTrigger = 0.0f;
+
+        [System.NonSerialized]
+        public List<Influencer> activeInfluencers = new List<Influencer>();
 
         [SerializeField]
-        private EModifierType type = EModifierType.once;
+        public List<Influencer> influencers = new List<Influencer>();
+
+        [System.NonSerialized]
+        public List<Impacter> activeImpacters = new List<Impacter>();
 
         [SerializeField]
-        private bool timeLimited = false;
-
-        [SerializeField, Min(0.0f)]
-        private float duration = 0.0f;
-
-        [SerializeField, Min(0)]
-        private int numberOfUtilization = 0;
-
-        [SerializeField, Min(0.0f)]
-        private float intervalOfUtilization = 0.0f;
-
-        [SerializeField]
-        public List<ImpactedNeed> impactedNeeds = new List<ImpactedNeed>();
+        public List<Impacter> impacters = new List<Impacter>();
 
         [SerializeField]
         public List<Condition> conditions = new List<Condition>();
+
+        public bool ApplyModifier(ref TamagotchiManager tamagotchiManager)
+        {
+            foreach (var impacter in new List<Impacter>(activeImpacters))
+            {
+                if (!impacter.running)
+                    activeImpacters.Remove(impacter);
+            }
+
+            foreach (var influencer in new List<Influencer>(activeInfluencers))
+            {
+                if (!influencer.CheckState())
+                {
+                    influencer.Remove(ref tamagotchiManager);
+                    activeInfluencers.Remove(influencer);
+                }
+            }
+
+            return activeImpacters.Count + activeInfluencers.Count != 0;
+        }
+
+        public bool CheckConditions(TamagotchiManager tamagotchiManager)
+        {
+            foreach (var condition in conditions)
+            {
+                //Check if the condition isn't validated then return false because we do not met all needed condition to launch the modifier;
+                if ((tamagotchiManager.needs[condition.need.selected].statistic.FeltScore >= condition.conditionPercentage) != condition.isSuperior)
+                    return false;
+            }
+
+            return true;
+        }
+
+        public void Activate(ref ModifiersManager modifiersManager)
+        {
+            foreach (var impacter in impacters)
+            {
+                impacter.Start(ref modifiersManager);
+                activeImpacters.Add(impacter);
+            }
+
+            foreach (var influencer in influencers)
+            {
+                influencer.Start(ref modifiersManager.tamagotchiManager);
+                activeInfluencers.Add(influencer);
+            }
+        }
+
     }
 
     [Serializable]
@@ -61,7 +91,7 @@ namespace Tamagotchi
         public float conditionPercentage;
     }
 
-    public enum EModifierType
+    public enum EImpacterType
     {
         once,
         continuous,
@@ -71,55 +101,146 @@ namespace Tamagotchi
     [Serializable]
     public class Influencer
     {
-        [SerializeField] private string _inflName;
-        public string inflName => _inflName;
+        [SerializeField]
+        public string influencerName = "";
 
-        [SerializeField] private bool timeLimited;
-        [SerializeField] private float lastsFor;
+        [SerializeField]
+        private float editorGUISize = 0.0f;
 
-        [SerializeField] private float modifierCoef;
+        [SerializeField]
+        private bool influencerFoldout = false;
 
-        /// <summary> Uses the modifier, by default consuming it if it is limited in time. </summary>
-        /// <returns> Returns if it has been fully consumed, and its value. </returns>
-        public float UseInfluencer(out bool isConsumed, bool consume = true)
+        [SerializeField]
+        private float influenceCoef;
+
+        [SerializeField]
+        private bool timeLimited;
+
+        [SerializeField, Min(0.0f)]
+        public float duration = 0.0f;
+
+        [SerializeField, Min(0.0f)]
+        public float startTime = 0.0f;
+
+        [SerializeField, Min(0.0f)]
+        public float actualTime = 0.0f;
+
+        [SerializeField]
+        public List<ImpactedNeed> impactedNeeds = new List<ImpactedNeed>();
+
+        public void Start(ref TamagotchiManager tamagotchiManager)
         {
-            if (timeLimited)
+            startTime = Time.realtimeSinceStartup;
+            foreach (var need in impactedNeeds)
             {
-                lastsFor -= Time.deltaTime;
-
-                isConsumed = lastsFor <= 0f;
+                tamagotchiManager.needs[need.selected].statistic.ApplyInfluencer(influenceCoef);
             }
-            else isConsumed = false;
+        }
 
+        public bool CheckState()
+        {
+            actualTime = Time.realtimeSinceStartup;
+            return !timeLimited || actualTime - startTime < duration;
+        }
 
-            return modifierCoef;
+        public void Remove(ref TamagotchiManager tamagotchiManager)
+        {
+            foreach (var need in impactedNeeds)
+            {
+                tamagotchiManager.needs[need.selected].statistic.ApplyInfluencer(1 / influenceCoef);
+            }
         }
     }
 
     [Serializable]
     public class Impacter
     {
-        [SerializeField] private string _inpcName;
-        public string inpcName => _inpcName;
+        [SerializeField]
+        public string impacterName;
 
-        [SerializeField, Min(-1)] private int repeatNtimes;
-        [SerializeField, Min(0.01f)] private float repetitionInterval;
+        [SerializeField]
+        private float editorGUISize = 0.0f;
 
-        [SerializeField] private float modifierValue;
+        [SerializeField]
+        private bool impacterFoldout = false;
 
+        [SerializeField]
+        public float impactValue;
 
-        public float Impact(out bool willRepeat)
+        [SerializeField]
+        public EImpacterType type = EImpacterType.once;
+
+        [SerializeField]
+        public bool timeLimited = false;
+
+        [SerializeField, Min(-1.0f)]
+        public float duration = 0.0f;
+
+        [SerializeField, Min(0.0f)]
+        public float startTime = 0.0f;
+
+        [SerializeField, Min(0.0f)]
+        public float actualTime = 0.0f;
+
+        [SerializeField, Min(-1)]
+        public int numberOfUtilization = 0;
+
+        [SerializeField, Min(0.0f)]
+        public int actualNumberOfUtilization = 0;
+
+        [SerializeField, Min(0.0f)]
+        public float lastCoroutineStartTime = 0.0f;
+
+        [SerializeField, Min(0.01f)]
+        private float intervalOfUtilization;
+
+        [SerializeField]
+        public List<ImpactedNeed> impactedNeeds = new List<ImpactedNeed>();
+
+        [System.NonSerialized]
+        public bool running = false;
+
+        [System.NonSerialized]
+        private TamagotchiManager tamagotchiManager;
+
+        public void Start(ref ModifiersManager modifiersManager)
         {
-            if (repeatNtimes > 0)
+            if (timeLimited)
+                startTime = Time.realtimeSinceStartup;
+
+            else
+                actualNumberOfUtilization = 0;
+
+            tamagotchiManager = modifiersManager.tamagotchiManager;
+            modifiersManager.StartCoroutine(Impact());
+        }
+
+        IEnumerator Impact()
+        {
+            running = true;
+            while ((timeLimited && (actualTime - startTime < duration || duration == -1)) || numberOfUtilization > actualNumberOfUtilization)
             {
-                repeatNtimes--;
+                actualTime = Time.realtimeSinceStartup;
+                if (type == EImpacterType.regular && actualTime - lastCoroutineStartTime < intervalOfUtilization)
+                {
+                    yield return new WaitForSeconds(intervalOfUtilization - (actualTime - lastCoroutineStartTime));
+                }
 
-                willRepeat = repeatNtimes != 0;
+                foreach (var need in impactedNeeds)
+                {
+                    tamagotchiManager.needs[need.selected].statistic.ApplyImpacter(impactValue);
+                }
+
+                if (!timeLimited)
+                    actualNumberOfUtilization++;
+
+                actualTime = Time.realtimeSinceStartup;
+                lastCoroutineStartTime = Time.realtimeSinceStartup;
+
+                yield return null;
             }
-            else willRepeat = true;
 
-
-            return modifierValue;
+            running = false;
         }
     }
 }

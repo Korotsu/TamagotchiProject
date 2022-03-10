@@ -14,7 +14,7 @@ namespace Tamagotchi
 
         [SerializeField, Min(0.001f)] private float maxValue;
         [SerializeField, Min(0)] private float currentValue;
-        private float currentCoef = 1.0f;
+        [SerializeField, Min(0)] private float currentCoef = 1.0f;
 
         [SerializeField] private AnimationCurve feltScoreCurve;
 
@@ -22,13 +22,24 @@ namespace Tamagotchi
         public float FeltScore => feltScoreCurve.Evaluate(currentValue / maxValue);
 
 
-        [SerializeField] private List<Influencer> activeInfluencers;
+        /*[SerializeField] private List<Influencer> activeInfluencers;
 
         [SerializeField] private List<Impacter> startingImpacters;
-        private List<Impacter> activeImpacters;
+        private List<Impacter> activeImpacters;*/
+
+        public void ApplyImpacter(float impact)
+        {
+            currentValue += impact;
+            currentValue = Mathf.Clamp(currentValue, 0, maxValue);
+        }
+
+        public void ApplyInfluencer(float influence)
+        {
+            currentCoef *= influence;
+        }
 
 
-        public void AddInfluencer(Influencer newInfluencer)
+        /*public void AddInfluencer(Influencer newInfluencer)
         {
             if (activeInfluencers.All(influencer => influencer.inflName != newInfluencer.inflName))
                 activeInfluencers.Add(newInfluencer);
@@ -44,16 +55,16 @@ namespace Tamagotchi
                 if (activeImpacters.All(impacter => impacter.inpcName != newImpacter.inpcName))
                     activeImpacters.Add(newImpacter);
             }
-        }
+        }*/
 
 
-        private void Start()
+        /*private void Start()
         {
             foreach (Impacter impacter in activeImpacters)
                 AddImpacter(impacter);
 
             startingImpacters.Clear();
-        }
+        }*/
 
         public void UpdateValue()
         {

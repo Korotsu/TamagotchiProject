@@ -21,7 +21,7 @@ namespace Tamagotchi
         private TMP_Dropdown actionDropdown = null;
 
         [SerializeField]
-        private Button actionButton = null;
+        private float StatisticsCheckRefreshRate = 2.0f;
 
         private int bestStatIndex = 0;
         private float bestStatValue = 0.0f;
@@ -31,7 +31,7 @@ namespace Tamagotchi
         {
             if (requestText)
             {
-                InvokeRepeating(nameof(CheckAllStatistics), 2.0f, 5.0f);
+                InvokeRepeating(nameof(CheckAllStatistics), 2.0f, StatisticsCheckRefreshRate);
             }
 
             if (actionDropdown)
@@ -54,9 +54,13 @@ namespace Tamagotchi
 
         public void StartAction()
         {
-            foreach (var influencedNeeds in actionManager.actions[actionDropdown.value].impactedNeeds)
+            var action = actionManager.actions[actionDropdown.value];
+            foreach (var impacter in action.impacters)
             {
-                needs[influencedNeeds.selected].statistic.AddImpacter(new Impacter()); //Do Action (change value according to the needed behavior);
+                foreach (var need in impacter.impactedNeeds)
+                {
+                    needs[need.selected].statistic.ApplyImpacter(impacter.impactValue);
+                }
             }
         }
 
@@ -68,7 +72,7 @@ namespace Tamagotchi
             {
                 float tempStatValue = needs[i].CheckStatistic();
 
-                if (tempStatValue > bestStatValue)
+                if (tempStatValue > bestStatValue && tempStatValue > needs[i].debugStep)
                 {
                     bestStatValue = tempStatValue;
                     bestStatIndex = i;
