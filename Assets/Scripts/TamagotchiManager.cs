@@ -18,7 +18,22 @@ namespace Tamagotchi
         private TMP_Text requestText = null;
 
         [SerializeField]
+        private Image dialogueBubble = null;
+
+        [SerializeField]
         private TMP_Dropdown actionDropdown = null;
+
+        [SerializeField]
+        private GameObject gaugePrefab = null;
+
+        [SerializeField]
+        private RectTransform gaugeContainer = null;
+
+        [SerializeField, Min(0.0f)]
+        private float gaugeContainerSpaces;
+
+        [SerializeField, Min(0.0f)]
+        private float gaugeSizes;
 
         [SerializeField]
         private float StatisticsCheckRefreshRate = 2.0f;
@@ -40,6 +55,23 @@ namespace Tamagotchi
                     actionManager.actions.Select(action => new TMP_Dropdown.OptionData(action.action)).ToList();
 
                 actionDropdown.options = optionDataList;
+            }
+
+            if (gaugeContainer)
+            {
+                gaugeContainer.GetComponent<VerticalLayoutGroup>().spacing = gaugeContainerSpaces;
+                gaugeContainer.sizeDelta = new Vector2(gaugeContainer.sizeDelta.x, (gaugeSizes + gaugeContainerSpaces) * needs.Count);
+                foreach (var need in needs)
+                {
+                    var newGauge = Instantiate(gaugePrefab, gaugeContainer.transform);
+
+                    need.gauge = newGauge.transform.GetChild(0).GetChild(0).GetComponent<Image>();
+                    var gaugeText = newGauge.transform.GetChild(0).GetChild(1).GetComponent<TMP_Text>();
+
+                    gaugeText.text = need.statistic.statName;
+                    gaugeText.color = need.textColor;
+                    need.gauge.color = need.gaugeColor;
+                }
             }
         }
 
@@ -72,18 +104,24 @@ namespace Tamagotchi
             {
                 float tempStatValue = needs[i].CheckStatistic();
 
-                if (tempStatValue > bestStatValue && tempStatValue > needs[i].debugStep)
+                if (tempStatValue > bestStatValue && tempStatValue > needs[i].step)
                 {
                     bestStatValue = tempStatValue;
                     bestStatIndex = i;
                 }
             }
 
-            if (bestStatValue > needs[bestStatIndex].debugStep)
+            if (bestStatValue > needs[bestStatIndex].step)
+            {
                 requestText.text = needs[bestStatIndex].request;
+                dialogueBubble.enabled = true;
+            }
 
             else
+            {
                 requestText.text = string.Empty;
+                dialogueBubble.enabled = false;
+            }
         }
     }
 }
