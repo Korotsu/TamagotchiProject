@@ -35,7 +35,7 @@ namespace Tamagotchi
 
         public float CheckStatistic()
         {
-            var statValue = statistic.FeltScore;
+            float statValue = statistic.FeltScore;
             gauge.fillAmount = reverseGauge ? statValue : 1 - statValue;
 
             return statValue > UnityEngine.Random.value ? statValue : 0.0f;

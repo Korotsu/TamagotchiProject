@@ -31,13 +31,13 @@ namespace Tamagotchi
 
         public bool ApplyModifier(ref TamagotchiManager tamagotchiManager)
         {
-            foreach (var impacter in new List<Impacter>(activeImpacters))
+            foreach (Impacter impacter in new List<Impacter>(activeImpacters))
             {
                 if (!impacter.running)
                     activeImpacters.Remove(impacter);
             }
 
-            foreach (var influencer in new List<Influencer>(activeInfluencers))
+            foreach (Influencer influencer in new List<Influencer>(activeInfluencers))
             {
                 if (!influencer.CheckState())
                 {
@@ -51,10 +51,10 @@ namespace Tamagotchi
 
         public bool CheckConditions(TamagotchiManager tamagotchiManager)
         {
-            foreach (var condition in conditions)
+            foreach (Condition condition in conditions)
             {
                 //Check if the condition isn't validated then return false because we do not met all needed condition to launch the modifier;
-                if ((tamagotchiManager.needs[condition.need.selected].statistic.FeltScore >= condition.conditionPercentage) != condition.isSuperior)
+                if ((tamagotchiManager.needs[condition.needReference.selected].statistic.FeltScore >= condition.conditionPercentage) != condition.isSuperior)
                     return false;
             }
 
@@ -63,13 +63,13 @@ namespace Tamagotchi
 
         public void Activate(ref ModifiersManager modifiersManager)
         {
-            foreach (var impacter in impacters)
+            foreach (Impacter impacter in impacters)
             {
                 impacter.Start(ref modifiersManager);
                 activeImpacters.Add(impacter);
             }
 
-            foreach (var influencer in influencers)
+            foreach (Influencer influencer in influencers)
             {
                 influencer.Start(ref modifiersManager.tamagotchiManager);
                 activeInfluencers.Add(influencer);
@@ -82,7 +82,7 @@ namespace Tamagotchi
     public class Condition
     {
         [SerializeField]
-        public ImpactedNeed need;
+        public NeedReference needReference;
 
         [SerializeField]
         public bool isSuperior = false;
@@ -126,12 +126,12 @@ namespace Tamagotchi
         public float actualTime = 0.0f;
 
         [SerializeField]
-        public List<ImpactedNeed> impactedNeeds = new List<ImpactedNeed>();
+        public List<NeedReference> impactedNeeds = new List<NeedReference>();
 
         public void Start(ref TamagotchiManager tamagotchiManager)
         {
             startTime = Time.realtimeSinceStartup;
-            foreach (var need in impactedNeeds)
+            foreach (NeedReference need in impactedNeeds)
             {
                 tamagotchiManager.needs[need.selected].statistic.ApplyInfluencer(influenceCoef);
             }
@@ -145,7 +145,7 @@ namespace Tamagotchi
 
         public void Remove(ref TamagotchiManager tamagotchiManager)
         {
-            foreach (var need in impactedNeeds)
+            foreach (NeedReference need in impactedNeeds)
             {
                 tamagotchiManager.needs[need.selected].statistic.ApplyInfluencer(1 / influenceCoef);
             }
@@ -195,7 +195,7 @@ namespace Tamagotchi
         private float intervalOfUtilization;
 
         [SerializeField]
-        public List<ImpactedNeed> impactedNeeds = new List<ImpactedNeed>();
+        public List<NeedReference> impactedNeeds = new List<NeedReference>();
 
         [System.NonSerialized]
         public bool running = false;
@@ -226,7 +226,7 @@ namespace Tamagotchi
                     yield return new WaitForSeconds(intervalOfUtilization - (actualTime - lastCoroutineStartTime));
                 }
 
-                foreach (var need in impactedNeeds)
+                foreach (NeedReference need in impactedNeeds)
                 {
                     tamagotchiManager.needs[need.selected].statistic.ApplyImpacter(impactValue);
                 }

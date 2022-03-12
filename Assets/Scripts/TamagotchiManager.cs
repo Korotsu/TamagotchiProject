@@ -61,12 +61,12 @@ namespace Tamagotchi
             {
                 gaugeContainer.GetComponent<VerticalLayoutGroup>().spacing = gaugeContainerSpaces;
                 gaugeContainer.sizeDelta = new Vector2(gaugeContainer.sizeDelta.x, (gaugeSizes + gaugeContainerSpaces) * needs.Count);
-                foreach (var need in needs)
+                foreach (Need need in needs)
                 {
-                    var newGauge = Instantiate(gaugePrefab, gaugeContainer.transform);
+                    GameObject newGauge = Instantiate(gaugePrefab, gaugeContainer.transform);
 
                     need.gauge = newGauge.transform.GetChild(0).GetChild(0).GetComponent<Image>();
-                    var gaugeText = newGauge.transform.GetChild(0).GetChild(1).GetComponent<TMP_Text>();
+                    TMP_Text gaugeText = newGauge.transform.GetChild(0).GetChild(1).GetComponent<TMP_Text>();
 
                     gaugeText.text = need.statistic.statName;
                     gaugeText.color = need.textColor;
@@ -78,7 +78,7 @@ namespace Tamagotchi
         // Update is called once per frame
         void Update()
         {
-            foreach (var need in needs)
+            foreach (Need need in needs)
             {
                 need.statistic.UpdateValue();
             }
@@ -86,10 +86,10 @@ namespace Tamagotchi
 
         public void StartAction()
         {
-            var action = actionManager.actions[actionDropdown.value];
-            foreach (var impacter in action.impacters)
+            Action action = actionManager.actions[actionDropdown.value];
+            foreach (Impacter impacter in action.impacters)
             {
-                foreach (var need in impacter.impactedNeeds)
+                foreach (NeedReference need in impacter.impactedNeeds)
                 {
                     needs[need.selected].statistic.ApplyImpacter(impacter.impactValue);
                 }

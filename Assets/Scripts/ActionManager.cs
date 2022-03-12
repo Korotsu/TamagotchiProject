@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Tamagotchi
 {
     [System.Serializable]
-    public class ImpactedNeed
+    public class NeedReference
     {
         public int selected;
     }

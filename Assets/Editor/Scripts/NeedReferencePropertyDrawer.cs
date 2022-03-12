@@ -6,31 +6,39 @@ using UnityEditor;
 
 namespace Tamagotchi
 {
-    [CustomPropertyDrawer(typeof(ImpactedNeed))]
-    public class ImpactedNeedPropertyDrawer : PropertyDrawer
+    [CustomPropertyDrawer(typeof(NeedReference))]
+    public class NeedReferencePropertyDrawer : PropertyDrawer
     {
-        private float offset = 5.0f;
+        private const float offset = 5.0f;
+
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             EditorGUI.BeginProperty(position, label, property);
 
-            var indent = EditorGUI.indentLevel;
+            int indent = EditorGUI.indentLevel;
             EditorGUI.indentLevel = 0;
 
-            var actionManagerValue = property.serializedObject.targetObject as ActionManager;
-            var modifierManagerValue = property.serializedObject.targetObject as ModifiersManager;
+            ActionManager       actionManagerValue      = property.serializedObject.targetObject as ActionManager;
+            ModifiersManager    modifierManagerValue    = property.serializedObject.targetObject as ModifiersManager;
+            HumorManager        humorManagerValue       = property.serializedObject.targetObject as HumorManager;
 
-            var impactedNeedRect = new Rect(position.x, position.y, position.width, EditorGUIUtility.singleLineHeight);
-            var selected = property.FindPropertyRelative("selected");
+            Rect impactedNeedRect = new Rect(position.x, position.y, position.width, EditorGUIUtility.singleLineHeight);
+            
+            SerializedProperty selected = property.FindPropertyRelative("selected");
 
-            List<string> options = new List<string>();
+            
+            var options = new List<string>();
 
             if (actionManagerValue)
                 options = actionManagerValue.tamagotchiManager.needs.Select(need => need.name).ToList();
 
             else if (modifierManagerValue)
                 options = modifierManagerValue.tamagotchiManager.needs.Select(need => need.name).ToList();
+            
+            else if (humorManagerValue)
+                options = humorManagerValue.tamagotchiManager.needs.Select(need => need.name).ToList();
 
+            
             selected.intValue = EditorGUI.Popup(impactedNeedRect, selected.intValue, options.ToArray());
             EditorGUI.indentLevel = indent;
 

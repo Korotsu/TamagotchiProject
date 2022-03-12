@@ -25,7 +25,7 @@ namespace Tamagotchi
 
 
         // Start is called before the first frame update
-        void Start()
+        private void Start()
         {
             inactiveModifiers = modifiers;
 
@@ -33,9 +33,9 @@ namespace Tamagotchi
             InvokeRepeating(nameof(CheckInactiveModifiers), 2.0f, checkInactiveModifiersRefreshRate);
         }
 
-        void CheckActiveModifiers()
+        private void CheckActiveModifiers()
         {
-            foreach (var modifier in new List<Modifier>(activeModifiers))
+            foreach (Modifier modifier in new List<Modifier>(activeModifiers))
             {
                 if (!modifier.ApplyModifier(ref tamagotchiManager))
                 {
@@ -45,13 +45,13 @@ namespace Tamagotchi
             }
         }
 
-        void CheckInactiveModifiers()
+        private void CheckInactiveModifiers()
         {
             foreach (var modifier in new List<Modifier>(inactiveModifiers))
             {
                 if (modifier.CheckConditions(tamagotchiManager) && modifier.chanceToTrigger > UnityEngine.Random.value)
                 {
-                    var modifiersManager = this;
+                    ModifiersManager modifiersManager = this;
                     modifier.Activate(ref modifiersManager);
                     activeModifiers.Add(modifier);
                     inactiveModifiers.Remove(modifier);
