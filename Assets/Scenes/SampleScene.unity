@@ -713,7 +713,7 @@ MonoBehaviour:
         needName: Sleeping
     conditions:
     - needReference:
-        selected: 5
+        selected: 4
         needName: Cleaning
       isSuperior: 1
       conditionPercentage: 0.597
@@ -787,8 +787,8 @@ MonoBehaviour:
       m_RotationOrder: 0
     consequences:
     - influencerName: Insomnia
-      editorGUISize: 23
-      influencerFoldout: 0
+      editorGUISize: 115
+      influencerFoldout: 1
       influenceCoef: 5
       timeLimited: 0
       duration: 0
