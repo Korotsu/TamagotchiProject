@@ -425,12 +425,12 @@ MonoBehaviour:
     request: I need to poop
     reverseGauge: 1
     gaugeColor: {r: 0.6132076, g: 0.40422174, b: 0.16487184, a: 1}
-    textColor: {r: 1, g: 0.9887706, b: 0, a: 1}
+    textColor: {r: 0.5849056, g: 0.2183123, b: 0, a: 1}
     statistic:
-      _statName: Pain in the ass
+      _statName: Poop amount
       maxValue: 500
       currentValue: 0
-      currentCoef: 10
+      currentCoef: 0
       feltScoreCurve:
         serializedVersion: 2
         m_Curve:
@@ -448,6 +448,76 @@ MonoBehaviour:
           value: 1
           inSlope: 2
           outSlope: 2
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+  - name: Drinking
+    step: 0.7
+    request: I'm thirsty
+    reverseGauge: 1
+    gaugeColor: {r: 0, g: 0.8105781, b: 1, a: 1}
+    textColor: {r: 1, g: 1, b: 1, a: 1}
+    statistic:
+      _statName: Thirst
+      maxValue: 500
+      currentValue: 0
+      currentCoef: 15
+      feltScoreCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 2
+          outSlope: 2
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+  - name: Having babies
+    step: 0.8
+    request: I need to reproduce myself !
+    reverseGauge: 1
+    gaugeColor: {r: 1, g: 0, b: 0.6168933, a: 1}
+    textColor: {r: 1, g: 0.051886797, b: 0.07864001, a: 1}
+    statistic:
+      _statName: Libido
+      maxValue: 500
+      currentValue: 0
+      currentCoef: 10
+      feltScoreCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 2
+          outSlope: 2
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
           tangentMode: 0
           weightedMode: 0
           inWeight: 0
@@ -481,8 +551,8 @@ MonoBehaviour:
   - action: Do Some Sports !
     impacters:
     - impacterName: Consume Calories
-      editorGUISize: 23
-      impacterFoldout: 0
+      editorGUISize: 175
+      impacterFoldout: 1
       impactValue: 10
       type: 0
       timeLimited: 0
@@ -497,8 +567,8 @@ MonoBehaviour:
       - selected: 1
         needName: Feeding
     - impacterName: Use Energy
-      editorGUISize: 23
-      impacterFoldout: 0
+      editorGUISize: 175
+      impacterFoldout: 1
       impactValue: 10
       type: 0
       timeLimited: 0
@@ -513,8 +583,8 @@ MonoBehaviour:
       - selected: 2
         needName: Sleeping
     - impacterName: to have fun
-      editorGUISize: 23
-      impacterFoldout: 0
+      editorGUISize: 175
+      impacterFoldout: 1
       impactValue: -70
       type: 0
       timeLimited: 0
@@ -531,8 +601,8 @@ MonoBehaviour:
   - action: Eat vegetables !
     impacters:
     - impacterName: Get Calories
-      editorGUISize: 23
-      impacterFoldout: 0
+      editorGUISize: 175
+      impacterFoldout: 1
       impactValue: -100
       type: 0
       timeLimited: 0
@@ -547,8 +617,8 @@ MonoBehaviour:
       - selected: 1
         needName: Feeding
     - impacterName: Disgusting
-      editorGUISize: 23
-      impacterFoldout: 0
+      editorGUISize: 175
+      impacterFoldout: 1
       impactValue: 20
       type: 0
       timeLimited: 0
@@ -565,8 +635,8 @@ MonoBehaviour:
   - action: TAKE SOME COKE !!!
     impacters:
     - impacterName: IM FINE NOW !
-      editorGUISize: 23
-      impacterFoldout: 0
+      editorGUISize: 175
+      impacterFoldout: 1
       impactValue: -200
       type: 0
       timeLimited: 0
@@ -581,8 +651,8 @@ MonoBehaviour:
       - selected: 2
         needName: Sleeping
     - impacterName: Bad for health
-      editorGUISize: 23
-      impacterFoldout: 0
+      editorGUISize: 175
+      impacterFoldout: 1
       impactValue: 20
       type: 0
       timeLimited: 0
@@ -633,8 +703,8 @@ MonoBehaviour:
   - action: Take Coffee
     impacters:
     - impacterName: Energy boost
-      editorGUISize: 23
-      impacterFoldout: 0
+      editorGUISize: 175
+      impacterFoldout: 1
       impactValue: -20
       type: 0
       timeLimited: 0
@@ -649,8 +719,8 @@ MonoBehaviour:
       - selected: 2
         needName: Sleeping
     - impacterName: Nutritive
-      editorGUISize: 23
-      impacterFoldout: 0
+      editorGUISize: 175
+      impacterFoldout: 1
       impactValue: -10
       type: 0
       timeLimited: 0
@@ -664,6 +734,74 @@ MonoBehaviour:
       impactedNeeds:
       - selected: 1
         needName: Feeding
+  - action: Have babies
+    impacters:
+    - impacterName: Energy cost
+      editorGUISize: 115
+      impacterFoldout: 1
+      impactValue: 20
+      type: 0
+      timeLimited: 0
+      duration: 0
+      startTime: 0
+      actualTime: 0
+      numberOfUtilization: 0
+      actualNumberOfUtilization: 0
+      lastCoroutineStartTime: 0
+      intervalOfUtilization: 0
+      impactedNeeds:
+      - selected: 2
+        needName: Sleeping
+    - impacterName: Fun
+      editorGUISize: 175
+      impacterFoldout: 1
+      impactValue: -10
+      type: 0
+      timeLimited: 0
+      duration: 0
+      startTime: 0
+      actualTime: 0
+      numberOfUtilization: 0
+      actualNumberOfUtilization: 0
+      lastCoroutineStartTime: 0
+      intervalOfUtilization: 0
+      impactedNeeds:
+      - selected: 3
+        needName: Playing
+    - impacterName: Sexual satisfaction
+      editorGUISize: 175
+      impacterFoldout: 1
+      impactValue: -200
+      type: 0
+      timeLimited: 0
+      duration: 0
+      startTime: 0
+      actualTime: 0
+      numberOfUtilization: 0
+      actualNumberOfUtilization: 0
+      lastCoroutineStartTime: 0
+      intervalOfUtilization: 0
+      impactedNeeds:
+      - selected: 7
+        needName: Having babies
+  - action: Go to toilets
+    impacters:
+    - impacterName: pooping
+      editorGUISize: 175
+      impacterFoldout: 1
+      impactValue: -50
+      type: 0
+      timeLimited: 0
+      duration: 0
+      startTime: 0
+      actualTime: 0
+      numberOfUtilization: 0
+      actualNumberOfUtilization: 0
+      lastCoroutineStartTime: 0
+      intervalOfUtilization: 0
+      impactedNeeds:
+      - selected: 5
+        needName: Pooping
 --- !u!114 &151983155
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -684,8 +822,8 @@ MonoBehaviour:
     chanceToTrigger: 0.763
     influencers:
     - influencerName: Propagation of Cancerous cellular
-      editorGUISize: 23
-      influencerFoldout: 0
+      editorGUISize: 198
+      influencerFoldout: 1
       influenceCoef: 3
       timeLimited: 1
       duration: 5
@@ -696,8 +834,8 @@ MonoBehaviour:
         needName: Feeding
     impacters:
     - impacterName: Pain
-      editorGUISize: 23
-      impacterFoldout: 0
+      editorGUISize: 244
+      impacterFoldout: 1
       impactValue: 10
       type: 2
       timeLimited: 0
@@ -721,8 +859,8 @@ MonoBehaviour:
     chanceToTrigger: 0.657
     influencers:
     - influencerName: Can sleep !
-      editorGUISize: 23
-      influencerFoldout: 0
+      editorGUISize: 198
+      influencerFoldout: 1
       influenceCoef: 1.5
       timeLimited: 1
       duration: 10
@@ -787,7 +925,7 @@ MonoBehaviour:
       m_RotationOrder: 0
     consequences:
     - influencerName: Insomnia
-      editorGUISize: 115
+      editorGUISize: 175
       influencerFoldout: 1
       influenceCoef: 5
       timeLimited: 0
@@ -1415,7 +1553,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 818127200}
   m_Direction: 2
   m_Value: 1.0000008
-  m_Size: 0.44350645
+  m_Size: 0.44350648
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
