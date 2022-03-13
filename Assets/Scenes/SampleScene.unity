@@ -551,8 +551,8 @@ MonoBehaviour:
   - action: Do Some Sports !
     impacters:
     - impacterName: Consume Calories
-      editorGUISize: 175
-      impacterFoldout: 1
+      editorGUISize: 23
+      impacterFoldout: 0
       impactValue: 10
       type: 0
       timeLimited: 0
@@ -567,8 +567,8 @@ MonoBehaviour:
       - selected: 1
         needName: Feeding
     - impacterName: Use Energy
-      editorGUISize: 175
-      impacterFoldout: 1
+      editorGUISize: 23
+      impacterFoldout: 0
       impactValue: 10
       type: 0
       timeLimited: 0
@@ -583,8 +583,8 @@ MonoBehaviour:
       - selected: 2
         needName: Sleeping
     - impacterName: to have fun
-      editorGUISize: 175
-      impacterFoldout: 1
+      editorGUISize: 23
+      impacterFoldout: 0
       impactValue: -70
       type: 0
       timeLimited: 0
@@ -601,8 +601,8 @@ MonoBehaviour:
   - action: Eat vegetables !
     impacters:
     - impacterName: Get Calories
-      editorGUISize: 175
-      impacterFoldout: 1
+      editorGUISize: 23
+      impacterFoldout: 0
       impactValue: -100
       type: 0
       timeLimited: 0
@@ -617,8 +617,8 @@ MonoBehaviour:
       - selected: 1
         needName: Feeding
     - impacterName: Disgusting
-      editorGUISize: 175
-      impacterFoldout: 1
+      editorGUISize: 23
+      impacterFoldout: 0
       impactValue: 20
       type: 0
       timeLimited: 0
@@ -632,6 +632,38 @@ MonoBehaviour:
       impactedNeeds:
       - selected: 3
         needName: Playing
+    - impacterName: thirst
+      editorGUISize: 23
+      impacterFoldout: 0
+      impactValue: 20
+      type: 0
+      timeLimited: 0
+      duration: 0
+      startTime: 0
+      actualTime: 0
+      numberOfUtilization: 0
+      actualNumberOfUtilization: 0
+      lastCoroutineStartTime: 0
+      intervalOfUtilization: 0
+      impactedNeeds:
+      - selected: 6
+        needName: Drinking
+    - impacterName: poop
+      editorGUISize: 23
+      impacterFoldout: 0
+      impactValue: 40
+      type: 0
+      timeLimited: 0
+      duration: 0
+      startTime: 0
+      actualTime: 0
+      numberOfUtilization: 0
+      actualNumberOfUtilization: 0
+      lastCoroutineStartTime: 0
+      intervalOfUtilization: 0
+      impactedNeeds:
+      - selected: 5
+        needName: Pooping
   - action: TAKE SOME COKE !!!
     impacters:
     - impacterName: IM FINE NOW !
@@ -721,7 +753,7 @@ MonoBehaviour:
     - impacterName: Nutritive
       editorGUISize: 175
       impacterFoldout: 1
-      impactValue: -10
+      impactValue: -30
       type: 0
       timeLimited: 0
       duration: 0
@@ -732,8 +764,8 @@ MonoBehaviour:
       lastCoroutineStartTime: 0
       intervalOfUtilization: 0
       impactedNeeds:
-      - selected: 1
-        needName: Feeding
+      - selected: 6
+        needName: Drinking
   - action: Have babies
     impacters:
     - impacterName: Energy cost
@@ -872,10 +904,10 @@ MonoBehaviour:
     impacters: []
     conditions:
     - needReference:
-        selected: 3
-        needName: Playing
+        selected: 7
+        needName: Having babies
       isSuperior: 1
-      conditionPercentage: 0.319
+      conditionPercentage: 0.818
     - needReference:
         selected: 5
         needName: Pooping
@@ -897,8 +929,8 @@ MonoBehaviour:
   moodText: {fileID: 1570568863}
   moods:
   - moodName: Depressive
-    currentValue: 2
-    validationStep: 0.2
+    currentValue: 0
+    validationStep: 0.501
     feltScoreCurve:
       serializedVersion: 2
       m_Curve:
@@ -925,9 +957,9 @@ MonoBehaviour:
       m_RotationOrder: 0
     consequences:
     - influencerName: Insomnia
-      editorGUISize: 175
-      influencerFoldout: 1
-      influenceCoef: 5
+      editorGUISize: 23
+      influencerFoldout: 0
+      influenceCoef: 1.5
       timeLimited: 0
       duration: 0
       startTime: 0
@@ -944,6 +976,102 @@ MonoBehaviour:
       need:
         selected: 1
         needName: Feeding
+  - moodName: Horny
+    currentValue: 0
+    validationStep: 0.713
+    feltScoreCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 2
+        outSlope: 2
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 0
+    consequences:
+    - influencerName: Insomnia
+      editorGUISize: 23
+      influencerFoldout: 0
+      influenceCoef: 1.5
+      timeLimited: 0
+      duration: 0
+      startTime: 0
+      actualTime: 0
+      impactedNeeds:
+      - selected: 2
+        needName: Sleeping
+    moodInfluencers:
+    - influenceCoef: 10
+      need:
+        selected: 7
+        needName: Having babies
+  - moodName: Sad
+    currentValue: 0
+    validationStep: 0.405
+    feltScoreCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 2
+        outSlope: 2
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 0
+    consequences:
+    - influencerName: bored
+      editorGUISize: 198
+      influencerFoldout: 1
+      influenceCoef: 1.5
+      timeLimited: 1
+      duration: 5
+      startTime: 0
+      actualTime: 0
+      impactedNeeds:
+      - selected: 3
+        needName: Playing
+    moodInfluencers:
+    - influenceCoef: 1
+      need:
+        selected: 2
+        needName: Sleeping
+    - influenceCoef: 3
+      need:
+        selected: 3
+        needName: Playing
+    - influenceCoef: 1
+      need:
+        selected: 7
+        needName: Having babies
 --- !u!1 &204180253
 GameObject:
   m_ObjectHideFlags: 0
@@ -1553,7 +1681,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 818127200}
   m_Direction: 2
   m_Value: 1.0000008
-  m_Size: 0.44350648
+  m_Size: 0.44350645
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
