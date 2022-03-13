@@ -54,7 +54,7 @@ namespace Tamagotchi
             foreach (Condition condition in conditions)
             {
                 //Check if the condition isn't validated then return false because we do not met all needed condition to launch the modifier;
-                if ((tamagotchiManager.needs[condition.needReference.selected].statistic.FeltScore >= condition.conditionPercentage) != condition.isSuperior)
+                if (condition.needReference.selected != -1 && (tamagotchiManager.needs[condition.needReference.selected].statistic.FeltScore >= condition.conditionPercentage) != condition.isSuperior)
                     return false;
             }
 
@@ -131,9 +131,10 @@ namespace Tamagotchi
         public void Start(ref TamagotchiManager tamagotchiManager)
         {
             startTime = Time.realtimeSinceStartup;
-            foreach (NeedReference need in impactedNeeds)
+            foreach (NeedReference needRef in impactedNeeds)
             {
-                tamagotchiManager.needs[need.selected].statistic.ApplyInfluencer(influenceCoef);
+                if (needRef.selected != -1)
+                    tamagotchiManager.needs[needRef.selected].statistic.ApplyInfluencer(influenceCoef);
             }
         }
 
@@ -145,9 +146,10 @@ namespace Tamagotchi
 
         public void Remove(ref TamagotchiManager tamagotchiManager)
         {
-            foreach (NeedReference need in impactedNeeds)
+            foreach (NeedReference needRef in impactedNeeds)
             {
-                tamagotchiManager.needs[need.selected].statistic.ApplyInfluencer(1 / influenceCoef);
+                if (needRef.selected != -1)
+                    tamagotchiManager.needs[needRef.selected].statistic.ApplyInfluencer(1 / influenceCoef);
             }
         }
     }
@@ -226,9 +228,10 @@ namespace Tamagotchi
                     yield return new WaitForSeconds(intervalOfUtilization - (actualTime - lastCoroutineStartTime));
                 }
 
-                foreach (NeedReference need in impactedNeeds)
+                foreach (NeedReference needRef in impactedNeeds)
                 {
-                    tamagotchiManager.needs[need.selected].statistic.ApplyImpacter(impactValue);
+                    if (needRef.selected != -1)
+                        tamagotchiManager.needs[needRef.selected].statistic.ApplyImpacter(impactValue);
                 }
 
                 if (!timeLimited)

@@ -5,9 +5,16 @@ using UnityEngine;
 namespace Tamagotchi
 {
     [System.Serializable]
+    public class Manager : MonoBehaviour
+    {
+        public TamagotchiManager tamagotchiManager;
+    }
+
+    [System.Serializable]
     public class NeedReference
     {
         public int selected;
+        public string needName;
     }
 
     [System.Serializable]
@@ -21,10 +28,8 @@ namespace Tamagotchi
     }
 
     [System.Serializable]
-    public class ActionManager : MonoBehaviour
+    public class ActionManager : Manager
     {
-        public TamagotchiManager tamagotchiManager;
-
         public List<Action> actions = new List<Action>();
     }
 }

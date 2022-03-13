@@ -5,11 +5,8 @@ using UnityEngine;
 namespace Tamagotchi
 {
     [System.Serializable]
-    public class ModifiersManager : MonoBehaviour
+    public class ModifiersManager : Manager
     {
-        [SerializeField]
-        public TamagotchiManager tamagotchiManager;
-
         [SerializeField]
         private float checkActiveModifiersRefreshRate = 0.5f;
 

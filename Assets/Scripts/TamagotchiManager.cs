@@ -89,9 +89,10 @@ namespace Tamagotchi
             Action action = actionManager.actions[actionDropdown.value];
             foreach (Impacter impacter in action.impacters)
             {
-                foreach (NeedReference need in impacter.impactedNeeds)
+                foreach (NeedReference needRef in impacter.impactedNeeds)
                 {
-                    needs[need.selected].statistic.ApplyImpacter(impacter.impactValue);
+                    if (needRef.selected != -1)
+                        needs[needRef.selected].statistic.ApplyImpacter(impacter.impactValue);
                 }
             }
         }

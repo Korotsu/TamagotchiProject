@@ -4,10 +4,8 @@ using UnityEngine;
 
 namespace Tamagotchi
 {
-    public class HumorManager : MonoBehaviour
+    public class HumorManager : Manager
     {
-        [SerializeField] public TamagotchiManager tamagotchiManager;
-
         [SerializeField] public List<MoodInfluencer> moodInfluencers;
     }
 
@@ -15,7 +13,7 @@ namespace Tamagotchi
     public class MoodInfluencer
     {
         private TamagotchiManager tamagotchiManager;
-        
+
         NeedReference aaa;
     }
 }

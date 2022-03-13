@@ -18,28 +18,33 @@ namespace Tamagotchi
             int indent = EditorGUI.indentLevel;
             EditorGUI.indentLevel = 0;
 
-            ActionManager       actionManagerValue      = property.serializedObject.targetObject as ActionManager;
-            ModifiersManager    modifierManagerValue    = property.serializedObject.targetObject as ModifiersManager;
-            HumorManager        humorManagerValue       = property.serializedObject.targetObject as HumorManager;
+            Manager managerValue = property.serializedObject.targetObject as Manager;
+            List<Need> needs = managerValue.tamagotchiManager.needs;
 
             Rect impactedNeedRect = new Rect(position.x, position.y, position.width, EditorGUIUtility.singleLineHeight);
-            
+
             SerializedProperty selected = property.FindPropertyRelative("selected");
+            SerializedProperty needName = property.FindPropertyRelative("needName");
+            List<string> options = needs.Select(need => need.name).ToList();
 
-            
-            var options = new List<string>();
-
-            if (actionManagerValue)
-                options = actionManagerValue.tamagotchiManager.needs.Select(need => need.name).ToList();
-
-            else if (modifierManagerValue)
-                options = modifierManagerValue.tamagotchiManager.needs.Select(need => need.name).ToList();
-            
-            else if (humorManagerValue)
-                options = humorManagerValue.tamagotchiManager.needs.Select(need => need.name).ToList();
-
-            
+            int previousValue = selected.intValue;
             selected.intValue = EditorGUI.Popup(impactedNeedRect, selected.intValue, options.ToArray());
+
+            if (selected.intValue != -1)
+            {
+                string newName = needs[selected.intValue].name;
+
+                if (selected.intValue == previousValue && needName.stringValue != newName)
+                    selected.intValue = needs.FindIndex(need => need.name == needName.stringValue);
+                else
+                    needName.stringValue = needs[selected.intValue].name;
+            }
+
+            else
+                needName.stringValue = "";
+
+
+
             EditorGUI.indentLevel = indent;
 
             EditorGUI.EndProperty();

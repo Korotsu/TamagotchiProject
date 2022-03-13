@@ -384,6 +384,41 @@ MonoBehaviour:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
+  - name: Pooping
+    step: 0.5
+    request: I need to poop
+    reverseGauge: 1
+    gaugeColor: {r: 0.6132076, g: 0.40422174, b: 0.16487184, a: 1}
+    textColor: {r: 1, g: 0.9887706, b: 0, a: 1}
+    statistic:
+      _statName: Pain in the ass
+      maxValue: 500
+      currentValue: 0
+      currentCoef: 10
+      feltScoreCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 2
+          outSlope: 2
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
   - name: Cleaning
     step: 0.5
     request: Im dirty =(
@@ -427,7 +462,7 @@ MonoBehaviour:
   gaugeContainer: {fileID: 368255794}
   gaugeContainerSpaces: 20
   gaugeSizes: 40
-  StatisticsCheckRefreshRate: 0.1
+  StatisticsCheckRefreshRate: 0.001
 --- !u!114 &151983154
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -459,6 +494,7 @@ MonoBehaviour:
       intervalOfUtilization: 0
       impactedNeeds:
       - selected: 1
+        needName: Feeding
     - impacterName: Use Energy
       editorGUISize: 23
       impacterFoldout: 0
@@ -474,6 +510,7 @@ MonoBehaviour:
       intervalOfUtilization: 0
       impactedNeeds:
       - selected: 2
+        needName: Sleeping
     - impacterName: to have fun
       editorGUISize: 23
       impacterFoldout: 0
@@ -489,6 +526,7 @@ MonoBehaviour:
       intervalOfUtilization: 0
       impactedNeeds:
       - selected: 3
+        needName: Playing
   - action: Eat vegetables !
     impacters:
     - impacterName: Get Calories
@@ -506,6 +544,7 @@ MonoBehaviour:
       intervalOfUtilization: 0
       impactedNeeds:
       - selected: 1
+        needName: Feeding
     - impacterName: Disgusting
       editorGUISize: 23
       impacterFoldout: 0
@@ -521,6 +560,7 @@ MonoBehaviour:
       intervalOfUtilization: 0
       impactedNeeds:
       - selected: 3
+        needName: Playing
   - action: TAKE SOME COKE !!!
     impacters:
     - impacterName: IM FINE NOW !
@@ -538,6 +578,7 @@ MonoBehaviour:
       intervalOfUtilization: 0
       impactedNeeds:
       - selected: 2
+        needName: Sleeping
     - impacterName: Bad for health
       editorGUISize: 23
       impacterFoldout: 0
@@ -553,6 +594,7 @@ MonoBehaviour:
       intervalOfUtilization: 0
       impactedNeeds:
       - selected: 0
+        needName: Health
   - action: Go Take A Shower !
     impacters:
     - impacterName: Im Clean
@@ -569,7 +611,8 @@ MonoBehaviour:
       lastCoroutineStartTime: 0
       intervalOfUtilization: 0
       impactedNeeds:
-      - selected: 4
+      - selected: 5
+        needName: Cleaning
     - impacterName: Im hungry
       editorGUISize: 23
       impacterFoldout: 0
@@ -585,6 +628,7 @@ MonoBehaviour:
       intervalOfUtilization: 0
       impactedNeeds:
       - selected: 1
+        needName: Feeding
   - action: Take Coffee
     impacters:
     - impacterName: Energy boost
@@ -602,6 +646,7 @@ MonoBehaviour:
       intervalOfUtilization: 0
       impactedNeeds:
       - selected: 2
+        needName: Sleeping
     - impacterName: Nutritive
       editorGUISize: 23
       impacterFoldout: 0
@@ -617,6 +662,7 @@ MonoBehaviour:
       intervalOfUtilization: 0
       impactedNeeds:
       - selected: 1
+        needName: Feeding
 --- !u!114 &151983155
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -646,6 +692,7 @@ MonoBehaviour:
       actualTime: 0
       impactedNeeds:
       - selected: 1
+        needName: Feeding
     impacters:
     - impacterName: Pain
       editorGUISize: 23
@@ -662,15 +709,17 @@ MonoBehaviour:
       intervalOfUtilization: 5
       impactedNeeds:
       - selected: 2
+        needName: Sleeping
     conditions:
-    - need:
-        selected: 2
+    - needReference:
+        selected: 5
+        needName: Cleaning
       isSuperior: 1
       conditionPercentage: 0.597
   - _modifierName: Sida
     chanceToTrigger: 0.657
     influencers:
-    - influencerName: Propagation of Cancerous cellular
+    - influencerName: Can sleep !
       editorGUISize: 23
       influencerFoldout: 0
       influenceCoef: 1.5
@@ -680,14 +729,17 @@ MonoBehaviour:
       actualTime: 0
       impactedNeeds:
       - selected: 2
+        needName: Sleeping
     impacters: []
     conditions:
-    - need:
+    - needReference:
         selected: 3
+        needName: Playing
       isSuperior: 1
       conditionPercentage: 0.319
-    - need:
+    - needReference:
         selected: 4
+        needName: Pooping
       isSuperior: 1
       conditionPercentage: 0.536
 --- !u!1 &204180253
